@@ -11,13 +11,6 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Customize to your needs...
-#
-git-info on
-bindkey -M viins '^W' vi-cmd-mode
-bindkey -v '^L'   forward-char
-bindkey -v '^H'   backward-char
-bindkey -v '^K'   up-line-or-history
-bindkey -v '^J'   down-line-or-history
 
 # zshの起動時のprofile表示用の設定
 # zprofの呼び出しをファイルの下に置くと
