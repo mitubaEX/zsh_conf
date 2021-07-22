@@ -4,7 +4,7 @@
 alias e='exit'
 alias rm='rm -rf'
 alias v='vim'
-alias vi='$HOME/nvim-osx64/bin/nvim'
+alias vi='nvim'
 
 # docker
 alias dockerrm='docker rm -f $(docker ps -qa)'
