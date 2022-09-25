@@ -80,7 +80,7 @@ export PATH=$PATH:$HOME/.local/bin:$HOME/.rbenv/bin:$HOME/.cabal:/usr/local/bin:
 stty stop undef
 stty start undef
 
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH:$HOME/node_modules/.bin"
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH:$HOME/node_modules/.bin:$HOME/.asdf/installs/nodejs/14.16.1/.npm/bin"
 
 # 全体で共有したい情報はこれを使う
 # source $HOME/.env
@@ -123,6 +123,10 @@ test -e "${ZDOTDIR}/.iterm2_shell_integration.zsh" && source "${ZDOTDIR}/.iterm2
 
 # fzf floating window
 export FZF_TMUX_OPTS="-w80% -h80%"
+
+# deno
+export DENO_INSTALL="$HOME/.deno"
+export PATH="$DENO_INSTALL/bin:$PATH"
 
 # To customize prompt, run `p10k configure` or edit ~/.zsh.d/.p10k.zsh.
 [[ ! -f ~/.zsh.d/.p10k.zsh ]] || source ~/.zsh.d/.p10k.zsh
