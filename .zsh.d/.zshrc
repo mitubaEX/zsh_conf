@@ -65,8 +65,8 @@ setopt no_beep
 bindkey -M viins 'jj' vi-cmd-mode
 bindkey -v '^F'   forward-char
 bindkey -v '^B'   backward-char
-bindkey -v '^K'   up-line-or-history
-bindkey -v '^J'   down-line-or-history
+# bindkey -v '^K'   up-line-or-history
+# bindkey -v '^J'   down-line-or-history
 bindkey -v '^P'   up-line-or-history
 bindkey -v '^N'   down-line-or-history
 
@@ -74,7 +74,7 @@ bindkey -v '^N'   down-line-or-history
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
-export PATH=$PATH:$HOME/.local/bin:$HOME/.rbenv/bin:$HOME/.cabal:/usr/local/bin:$HOME/.cargo/bin
+export PATH=$PATH:$HOME/.local/bin:$HOME/.rbenv/bin:$HOME/.cabal:/usr/local/bin:$HOME/.cargo/bin:/opt/homebrew/bin
 
 # vim
 stty stop undef
@@ -130,3 +130,32 @@ export PATH="$DENO_INSTALL/bin:$PATH"
 
 # To customize prompt, run `p10k configure` or edit ~/.zsh.d/.p10k.zsh.
 [[ ! -f ~/.zsh.d/.p10k.zsh ]] || source ~/.zsh.d/.p10k.zsh
+
+export AWS_DEFAULT_REGION=ap-northeast-1
+alias launchec2='saml2aws login --skip-prompt --force --role="arn:aws:iam::507110214534:role/freee-sso-developer" && sleep 2 && AWS_PROFILE=saml aws ec2 start-instances --instance-ids i-041c065459ebee3de'
+
+if (( $+commands[arch] )); then
+  alias a64="exec arch -arch arm64e '$SHELL'"
+  alias x64="exec arch -arch x86_64 '$SHELL'"
+fi
+
+function runs_on_ARM64() { [[ `uname -m` = "arm64" ]]; }
+function runs_on_X86_64() { [[ `uname -m` = "x86_64" ]]; }
+
+BREW_PATH_OPT="/opt/homebrew/bin"
+BREW_PATH_LOCAL="/usr/local/bin"
+function brew_exists_at_opt() { [[ -d ${BREW_PATH_OPT} ]]; }
+function brew_exists_at_local() { [[ -d ${BREW_PATH_LOCAL} ]]; }
+
+setopt no_global_rcs
+typeset -U path PATH
+path=($path /usr/sbin /sbin)
+
+if runs_on_ARM64; then
+  path=($BREW_PATH_OPT(N-/) $BREW_PATH_LOCAL(N-/) $path)
+else
+  path=($BREW_PATH_LOCAL(N-/) $path)
+fi
+eval "$(/Users/jun-nakamura/.local/bin/mise activate zsh)"
+
+alias saml-c='saml2aws console --skip-prompt --force'

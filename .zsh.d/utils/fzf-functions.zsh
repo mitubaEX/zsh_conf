@@ -64,12 +64,12 @@ function rename_session() {
 autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
 add-zsh-hook chpwd chpwd_recent_dirs
 
-function move_session_with_fzf() {
-  local moveto_session=$(tmux ls | awk -F':' '{print $1}' | fzf-tmux -w80% -h80%)
-  if [[ ! -z ${moveto_session} ]]
-  then
-    tmux switch-client -t $rtmux switch-client -t $moveto_session
-  fi
-}
-zle -N move_session_with_fzf
-bindkey '^S' move_session_with_fzf
+# function move_session_with_fzf() {
+#   local moveto_session=$(tmux ls | awk -F':' '{print $1}' | fzf-tmux -w80% -h80%)
+#   if [[ ! -z ${moveto_session} ]]
+#   then
+#     tmux switch-client -t $rtmux switch-client -t $moveto_session
+#   fi
+# }
+# zle -N move_session_with_fzf
+# bindkey '^S' move_session_with_fzf
