@@ -1,5 +1,3 @@
-export PATH=$PATH:$HOME/.local/bin:/opt/homebrew/bin
-
 # Source Prezto.
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
