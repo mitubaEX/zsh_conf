@@ -6,7 +6,3 @@ find .zsh.d -type f | xargs -I% ln -sf $(pwd)/% $HOME/%
 
 ln -sf $(pwd)/.zshenv $HOME/.zshenv
 ln -sf $(pwd)/.zpreztorc $HOME/.zsh.d/.zpreztorc
-
-# starship.toml
-mkdir -p $HOME/.config
-ln -sf $(pwd)/.config/starship.toml $HOME/.config/starship.toml
