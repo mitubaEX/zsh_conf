@@ -212,6 +212,47 @@ gmain() {
 }
 
 # PRレビュー用の 'review' 関数（堅牢版）
+# ghq + fzf でリポジトリに移動
+ghq-cd() {
+    local selected
+    selected=$(ghq list --full-path | fzf \
+        --preview '
+            dir={}
+            if [ -d "$dir/.git" ] || git -C "$dir" rev-parse --git-dir >/dev/null 2>&1; then
+                echo "── Branch ──"
+                git -C "$dir" branch --color=always -vv 2>/dev/null
+                echo ""
+                echo "── Log (recent 5) ──"
+                git -C "$dir" log --oneline --graph --color=always -5 2>/dev/null
+                echo ""
+                echo "── Status ──"
+                git -C "$dir" status --short 2>/dev/null || echo "(clean)"
+            else
+                echo "(not a git repository)"
+            fi
+        ' \
+        --preview-window 'right:55%:wrap:+0' \
+        --layout reverse \
+        --height '80%' \
+        --prompt 'ghq> ' \
+        --header 'Select a repository to cd into' \
+        --bind 'ctrl-/:toggle-preview' \
+    )
+
+    if [ -n "$selected" ]; then
+        cd "$selected" || return 1
+        echo "cd $selected"
+    fi
+}
+
+# Ctrl+g で ghq-cd を起動
+_ghq-cd-widget() {
+    ghq-cd
+    zle accept-line
+}
+zle -N _ghq-cd-widget
+bindkey '^G' _ghq-cd-widget
+
 review() {
     # 1. 引数（PR番号）が指定されているかチェック
     if [ -z "$1" ]; then
