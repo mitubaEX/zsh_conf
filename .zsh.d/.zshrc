@@ -201,6 +201,16 @@ work() {
     fi
 }
 
+# Switch to main branch and pull latest
+gmain() {
+  local main_branch
+  main_branch=$(git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed 's@^refs/remotes/origin/@@')
+  if [ -z "$main_branch" ]; then
+    main_branch="main"
+  fi
+  git checkout "$main_branch" && git pull origin "$main_branch"
+}
+
 # PRレビュー用の 'review' 関数（堅牢版）
 review() {
     # 1. 引数（PR番号）が指定されているかチェック
