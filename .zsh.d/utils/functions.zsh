@@ -2,7 +2,17 @@
 
 # デフォルトブランチに切り替えて最新を pull する
 gmain() {
-    local main_branch
+    local main_branch git_dir lock_file
+    # 中断した git 操作の残骸 (index.lock) が残っていると checkout/pull が
+    # "Unable to create index.lock: File exists" で失敗するため、事前に除去する
+    git_dir=$(git rev-parse --git-dir 2>/dev/null)
+    if [ -n "$git_dir" ]; then
+        lock_file="$git_dir/index.lock"
+        if [ -f "$lock_file" ]; then
+            echo "gmain: removing stale lock file: $lock_file"
+            rm -f "$lock_file"
+        fi
+    fi
     main_branch=$(git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed 's@^refs/remotes/origin/@@')
     if [ -z "$main_branch" ]; then
         main_branch="main"
