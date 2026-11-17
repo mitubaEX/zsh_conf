@@ -1,4 +1,3 @@
 rm $HOME/.zshenv
+rm $HOME/.zshrc
 rm $HOME/.zpreztorc
-
-rm -rf $HOME/.zsh.d
